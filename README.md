@@ -1,2 +1,1 @@
-# GeekBrains
-Studying repository
+Дз ко второму уроку
