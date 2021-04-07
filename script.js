@@ -1,65 +1,61 @@
 'use strict';
 
-// 1 задание (ПРОСТЫЕ ЧИСЛА)
-const arrOfNumbers = [];
-
-//массив чисел от 2 до 100, т.к. числа<=0 и 1 не являются простыми
-for (let i = 2; i <= 100; i++) {
-    if(isPrime(i)) 
-    arrOfNumbers.push(i);
-}
-
-//фукция проверки числа на простоту
-function isPrime(numb) {
-    if (isNaN(numb)) return false; //является ли числом
-    let max=Math.floor(Math.sqrt(numb)); //наибольшая целочисленная переменная в массиве
-    for (let j = 2; j <= max; j++) {
-        if (numb % j == 0) return false; //делится ли нацело на предыдущее число
+// 1 ЗАДАНИЕ (выделение ед,дес,сот и преобразование в объект)
+function numbPerObj(enterNumb){
+    //проверить,является ли числом!
+    if (enterNumb < 0 && enterNumb > 999 || !Number.isInteger(enterNumb) ) {
+        return {} ;//пустой объект
+    } else {
+        const units = Math.floor(enterNumb % 10); //вычиляет ед
+        const tens = Math.floor(enterNumb / 10 % 10); //вычиляет дес
+        const hundrets= Math.floor(enterNumb / 100 % 10); //вычиляет сот
+            return { //возвращает ед, дес, сот в форме объекта
+                единицы: units,
+                десятки: tens,
+                сотни: hundrets,
+            } 
     }
-    return true;
 }
 
-console.log(arrOfNumbers);
+const enterNumb = +prompt('Введите число от 0 до 999');
+const obj = numbPerObj(enterNumb); //присваиваем переменной результат функции
+console.log (obj); 
 
 
-//2 задание (КОРЗИНА)
-let arrBasket = [
-    ['Apple',  10, 3],
-    ['Banana', 20, 2],
-    ['Tomato', 30, 1],
-];
+// 2 ЗАДАНИЕ (Корзина на ООП)
+const objBasket = {
+    goods : [ //массив объектов корзины
+        {
+            name: 'apple',
+            price: 10,
+            count: 3,
+        },
 
-console.log(arrBasket);
+        {
+            name: 'banana',
+            price: 20,
+            count: 2,
+        },
 
-function countBasketPrice(arrBasket){
-    return arrBasket.reduce (function(_totalAmount, _basketItem){ //reduce()-метод для вычисления единого значения на основе всего массива
-        return _totalAmount + _basketItem[1] * _basketItem[2]; //0 + 10*3=30; 30+20*2=70; 70+30*1=100
-    }, 0 ); //0 - сумма товаров пустой корзины = начальное значение
-}
+        {
+        name: 'tomato',
+        price: 30,
+        count: 1,
+        },
+    ],
 
-console.log('Сумма товаров в корзине = ' + countBasketPrice(arrBasket) + ' рублей');
+    countBasketPrice() {
+        // (то же самое, что:)
+        // return this.goods.reduce( function(totalAmount, basketItem) {
+        // return totalAmount + basketItem.price * basketItem.count}, 0);
+        return this.goods.reduce((totalAmount, basketItem) => totalAmount + basketItem.price * basketItem.count, 0);
+    },
+};
 
-
-// 3 задание (ЦИКЛ for БЕЗ ТЕЛА)
-let i=0;
-
-if(i<9){
-    for (let k = 0; k <= 9; console.log(k++)) 
-    {}
-}
-
-
-//4 задание (ПИРАМИДА)
-let arrX = [];
-let currentRow = 0;
-
-while (currentRow < 20){
-    currentRow++;
-    arrX.push('x');
-    console.log(arrX);
-}
+console.log ('Сумма товаров в корзине = ' + objBasket.countBasketPrice() + ' рублей'); 
+//можно написать objBasket.countBasketPrice(objBasket), но этолишнее, 
+//т.к. функция внутри объекта - лучше objBasket.countBasketPrice()
 
 
-
-
-
+// 3 ЗАДАНИЕ
+// Думаю, что принцип создания корзины и каталога почти одинков. Поэтому им нужнобудет дать класс и по нему уже работать
