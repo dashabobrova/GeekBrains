@@ -156,8 +156,14 @@ const cart = {
         this.goods.forEach(item => {
             this.cartBlock.insertAdjacentHTML('beforeend', this.renderCartItem(item));
         });
-
+        this.cartBlock.insertAdjacentHTML('beforeend', `Стоимость всех товаров: ${this.countBasketPrice()} руб.`);
     },
+
+//подсчет стоимости товаров в корзине
+    countBasketPrice() {
+        return this.goods.reduce((totalAmount, basketItem) => totalAmount + basketItem.price * basketItem.quantity, 0);
+    },
+
 
 //Рендер отдельного товара в корзине
     renderCartItem(item) {
@@ -168,12 +174,6 @@ const cart = {
                 <p>Стоимость: ${item.quantity * item.price} руб.</p>
             </div>`;
     },
-
-    
-    // //подсчет стоимости товаров в корзине
-    // countBasketPrice() {
-    //     return this.goods.reduce((totalAmount, basketItem) => totalAmount + basketItem.price * basketItem.quantity, 0);
-    // },
 
 };
 
